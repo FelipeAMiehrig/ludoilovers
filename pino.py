@@ -1,5 +1,7 @@
 import numpy as np
 import itertools
+from casa import *
+
 __all__ = ['Pino']
 
 class Pino:
@@ -8,9 +10,9 @@ class Pino:
 
     # placeholder para coordenadas de pinos no tabuleiro
     # parte do tabuleiro recursiva
-    casas_rec = [(i, i) for i in np.arange(0,52)]
+    casas_rec = [Casa(i, i, False) for i in np.arange(0,len(Casa.coords_rec))]
     # casas base
-    casas_base = [(i*100, i*100) for i in np.arange(1,17)]
+    casas_base = [Casa(i*100, i*100, True) for i in np.arange(0,len(Casa.coords_base))]
     n_pinos = 0
 
     @staticmethod  # função que devolve o indice real da lista para recursão
@@ -25,7 +27,7 @@ class Pino:
         # número do pino do jogador (1:4)
         self.n_pino_jogador = Pino.n_pinos % 4 + 1
         self.cor = Pino.cores[self.n_cor]
-        self.coord = Pino.casas_base[Pino.n_pinos]
+        self.casa = Pino.casas_base[Pino.n_pinos]
         # contador de casas andadas
         self.cont = 0
         # iterador da lista recursiva
@@ -38,12 +40,12 @@ class Pino:
         self.cont += n
         self.i += n
         self.i = Pino.cycle(self.i)
-        self.coord = Pino.casas_rec[self.i]
+        self.casa = Pino.casas_rec[self.i]
 
     # voltar a base caso seja "comido"
     def volta_base(self):
         # casa especifica do pino
-        self.coord = Pino.casas_base[self.n_pino]
+        self.casa = Pino.casas_base[self.n_pino]
         self.cont = 0
         # iterador especifico da cor
         self.i = self.n_cor * 13 - 1
@@ -52,11 +54,11 @@ class Pino:
     def sai_base(self):
         self.cont += 1
         self.i += 1
-        self.coord = Pino.casas_rec[self.i]
+        self.casa = Pino.casas_rec[self.i]
 
 
     def __str__(self):
-        return "cor: '{}', n_pino_jogador: {}, coord: {}, cont: {}, i: {}".format(self.cor, self.n_pino_jogador, self.coord, self.cont, self.i)
+        return "cor: '{}', n_pino_jogador: {}, casa: '{}', cont: {}, i: {}".format(self.cor, self.n_pino_jogador, repr(self.casa), self.cont, self.i)
 
 
 # teste com lista de pinos
