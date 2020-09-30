@@ -1,4 +1,5 @@
 from dado import *
+from jogador import *
 
 def main():
     pass
