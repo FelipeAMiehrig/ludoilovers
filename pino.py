@@ -4,6 +4,8 @@ from casa import *
 
 __all__ = ['Pino']
 
+N_PINOS = 16
+
 class Pino:
 
     cores = ["vermelho", "azul", "amarelo", "verde"]
@@ -62,7 +64,7 @@ class Pino:
 
 
 # teste com lista de pinos
-lista_pinos = [Pino() for i in range(0,16)]
+lista_pinos = [Pino() for i in range(0,N_PINOS)]
 
 
 
