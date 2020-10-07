@@ -14,10 +14,7 @@ tabuleiro = cycle()
 pinos = list()
 jogadores = list()
 
-base_1 = list()
-base_2 = list()
-base_3 = list()
-base_4 = list()
+lista_bases = list()
 
 nomes_jogadores = list()
 cores_jogadores = list()
@@ -42,13 +39,28 @@ tabuleiro = cria_tabuleiro(cria_casas())
 
 def inicializa_pinos(cores):
     for numero_pino in range(NUMERO_PINOS / 4):
-        base_1[numero_pino] = cria_pino(cores[numero_pino + 0], numero_pino, CASAS_PARA_ANDAR)
-        base_2[numero_pino] = cria_pino(cores[numero_pino + 1], numero_pino, CASAS_PARA_ANDAR)
-        base_3[numero_pino] = cria_pino(cores[numero_pino + 2], numero_pino, CASAS_PARA_ANDAR)
-        base_4[numero_pino] = cria_pino(cores[numero_pino + 3], numero_pino, CASAS_PARA_ANDAR)
+        lista_bases[0][numero_pino] = cria_pino(cores[numero_pino + 0], numero_pino, CASAS_PARA_ANDAR)
+        lista_bases[1][numero_pino] = cria_pino(cores[numero_pino + 1], numero_pino, CASAS_PARA_ANDAR)
+        lista_bases[2][numero_pino] = cria_pino(cores[numero_pino + 2], numero_pino, CASAS_PARA_ANDAR)
+        lista_bases[3][numero_pino] = cria_pino(cores[numero_pino + 3], numero_pino, CASAS_PARA_ANDAR)
 
 
-def inicializa_jogadores(nomes, cores):
+def inicializa_jogadores(nomes, cores, bases):
     for numero_jogador in range(len(nomes_jogadores)):
-        jogadores.append(cria_jogador(nomes[numero_jogador], cores[numero_jogador], numero_jogador))
+        jogadores.append(cria_jogador(nomes[numero_jogador], cores[numero_jogador], numero_jogador, bases[numero_jogador]))
 
+
+def pino_sai_base(cor, numero_pino):
+    for jogador in jogadores:
+        if jogador['Cor'] == cor:
+            pino = jogador['Base'][numero_pino]
+            jogador['Base'][numero_pino] = None
+            tabuleiro[12 * jogador['Numero']]['Pinos'].append(pino)
+
+
+'''def move_pino(casa, cor, numero_pino, quantidade_casas):
+    for pino in tabuleiro[casa]['Pinos']:
+        if pino['Cor'] == cor and pino['Numero'] == numero_pino:
+            for movimentos in quantidade_casas:
+                next(tabuleiro)
+                tabuleiro # tabuleiro.pop(tabuleiro[casa]['Pinos'].index(pino))'''
