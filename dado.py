@@ -1,14 +1,10 @@
 import random
-__all__ = ['Dado']
-class Dado:
+__all__ = ['ultimo_resultado', 'atual_resultado', 'numero_jogadas', 'jogar_dado']
 
-    def __init__(self):
-        self.ultimo_resultado = 0
-        self.resultado = 0
-        self.num_jogadas = 0
+ultimo_resultado = -1
+atual_resultado = -1
+numero_jogadas = 0
 
-    def jogar(self):
-        self.ultimo_resultado = self.resultado
-        self.resultado = random.randint(1,6)
-        self.num_jogadas += 1
-        return self.resultado
+
+def jogar_dado():
+    return random.randint(1, 6)
