@@ -29,7 +29,7 @@ def cria_tabuleiro(casas):
 
 def cria_casas():
     casas = list()
-    for numero_casa in range(0, 52):
+    for numero_casa in range(NUMERO_CASAS_TABULEIRO):
         casas[numero_casa] = cria_casa(0, 0, False)
     return casas
 
@@ -58,9 +58,9 @@ def pino_sai_base(cor, numero_pino):
             tabuleiro[12 * jogador['Numero']]['Pinos'].append(pino)
 
 
-'''def move_pino(casa, cor, numero_pino, quantidade_casas):
+def move_pino(casa, cor, numero_pino, quantidade_casas):
     for pino in tabuleiro[casa]['Pinos']:
         if pino['Cor'] == cor and pino['Numero'] == numero_pino:
             for movimentos in quantidade_casas:
                 next(tabuleiro)
-                tabuleiro # tabuleiro.pop(tabuleiro[casa]['Pinos'].index(pino))'''
+                tabuleiro # tabuleiro.pop(tabuleiro[casa]['Pinos'].index(pino))

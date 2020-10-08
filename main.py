@@ -5,7 +5,7 @@ from itertools import cycle
 
 def main():
     lista_circular = cycle(['A', 'B', 'C', 'D', 'E', 'F', 'G'])
-    print(next(lista_circular))
+    print(lista_circular)
 
     pass
 
