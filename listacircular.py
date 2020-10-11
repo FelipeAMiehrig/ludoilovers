@@ -2,7 +2,7 @@ from itertools import cycle
 import sys
 
 
-class ListaCirular:
+class ListaCircular:
     def __init__(self, lista):
         self.tamanho = len(lista)
         self.lista_circular = lista
@@ -18,25 +18,22 @@ class ListaCirular:
     def set_indice_atual(self, indice):
         self.indice_atual = indice
 
+    def get_indice_atual(self):
+        return self.indice_atual
+
     def __getitem__(self, indice):
-        return self.lista_circular[self.indice_atual]
+        return self.lista_circular[indice]
 
     def __setitem__(self, indice, valor):
         self.lista_circular[indice] = valor
         return
 
-    def __str__(self):
+    def __repr__(self):
+        self.set_indice_atual(0)
         string = ''
         for elemento in self.lista_circular:
-            string = f'{string}{elemento}'
+            string = f'{string}{self.indice_atual} -> {elemento}'
             if elemento != self.tamanho - 1:
                 string = f'{string}\n'
+            self.next()
         return string
-
-
-lista = [{'A': 5}, {'B': 8}, {'C': 2}, {'D': 0}, {'E': 0}, {'F': 18}]
-lista_circular = ListaCirular(lista)
-
-print(lista_circular)
-lista_circular[2] = {'Z': 5}
-# print(lista_circular)

@@ -2,6 +2,7 @@ from pino import *
 from casa import *
 from jogador import *
 from dado import *
+from listacircular import ListaCircular
 from cor import Cor
 from itertools import cycle
 
@@ -9,10 +10,12 @@ CASAS_FALTANDO_ANDAR = 0
 NUMERO_CASAS_TABULEIRO = 52
 NUMERO_CASAS_BASE = 16
 NUMERO_JOGADORES = 4
+CASAS_CEU = 5
 
-tabuleiro = cycle()
+tabuleiro = None
 pinos = list()
 jogadores = list()
+ceu = list()
 
 lista_bases = list()
 
@@ -30,19 +33,30 @@ def cria_tabuleiro(casas):
 def cria_casas():
     casas = list()
     for numero_casa in range(NUMERO_CASAS_TABULEIRO):
-        casas[numero_casa] = cria_casa(0, 0, False)
+        casas.append(cria_casa(0, 0, False))
     return casas
 
 
-tabuleiro = cria_tabuleiro(cria_casas())
+tabuleiro = ListaCircular(cria_casas())
+
+
+def inicializa_lista_bases():
+    for numero_pino in range(NUMERO_PINOS // 4):
+        lista_bases.append(list())
+
+
+def cria_pinos():
+    for pino in range(NUMERO_PINOS):
+        cria_pino()
 
 
 def inicializa_pinos(cores):
-    for numero_pino in range(NUMERO_PINOS / 4):
-        lista_bases[0][numero_pino] = cria_pino(cores[numero_pino + 0], numero_pino, CASAS_PARA_ANDAR)
-        lista_bases[1][numero_pino] = cria_pino(cores[numero_pino + 1], numero_pino, CASAS_PARA_ANDAR)
-        lista_bases[2][numero_pino] = cria_pino(cores[numero_pino + 2], numero_pino, CASAS_PARA_ANDAR)
-        lista_bases[3][numero_pino] = cria_pino(cores[numero_pino + 3], numero_pino, CASAS_PARA_ANDAR)
+    inicializa_lista_bases()
+    for numero_pino in range(NUMERO_PINOS // 4):
+        lista_bases[0].append(cria_pino(cores[0], numero_pino, CASAS_PARA_ANDAR))
+        lista_bases[1].append(cria_pino(cores[1], numero_pino, CASAS_PARA_ANDAR))
+        lista_bases[2].append(cria_pino(cores[2], numero_pino, CASAS_PARA_ANDAR))
+        lista_bases[3].append(cria_pino(cores[3], numero_pino, CASAS_PARA_ANDAR))
 
 
 def inicializa_jogadores(nomes, cores, bases):
@@ -55,12 +69,66 @@ def pino_sai_base(cor, numero_pino):
         if jogador['Cor'] == cor:
             pino = jogador['Base'][numero_pino]
             jogador['Base'][numero_pino] = None
-            tabuleiro[12 * jogador['Numero']]['Pinos'].append(pino)
+            tabuleiro[13 * jogador['Numero']]['Pinos'].append(pino)
 
 
 def move_pino(casa, cor, numero_pino, quantidade_casas):
     for pino in tabuleiro[casa]['Pinos']:
         if pino['Cor'] == cor and pino['Numero'] == numero_pino:
-            for movimentos in quantidade_casas:
-                next(tabuleiro)
-                tabuleiro # tabuleiro.pop(tabuleiro[casa]['Pinos'].index(pino))
+            pino_em_movimento = tabuleiro[casa]['Pinos'].pop(tabuleiro[casa]['Pinos'].index(pino))
+            tabuleiro.set_indice_atual(casa)
+            for movimento in range(quantidade_casas):
+                tabuleiro.next()
+                # Update da interface no futuro
+            # Se a casa nao for segura checa para colisoes
+            if tabuleiro[casa]['Segura'] is False:
+                checa_colisoes(tabuleiro[tabuleiro.get_indice_atual()]['Pinos'], cor)
+            # Se for para o ceu
+            if pino_em_movimento['Casas Restantes'] - quantidade_casas <= 0:
+                pino_em_movimento['Casas Restantes'] = pino_em_movimento['Casas Restantes'] - quantidade_casas + CASAS_CEU
+                ceu.append(pino_em_movimento)
+            # Se estiver andando no tabuleiro normalmente
+            else:
+                pino_em_movimento['Casas Restantes'] = pino_em_movimento['Casas Restantes'] - quantidade_casas
+                tabuleiro[tabuleiro.get_indice_atual()]['Pinos'].append(pino_em_movimento)
+
+
+def checa_colisoes(pinos_na_casa, cor_pino):
+    for pino in pinos_na_casa:
+        if cor_pino != pino['Cor']:
+            pinos_na_casa.pop(pinos_na_casa.index(pino))
+            for jogador_atual in jogadores:
+                if jogador_atual['Cor'] == pino['Cor']:
+                    pino['Casas Restantes'] = 51
+                    jogador_atual['Base'][pino['Numero']] = pino
+                    break
+
+
+inicializa_pinos(cores_jogadores)
+inicializa_jogadores(nomes_jogadores, cores_jogadores, lista_bases)
+
+pino_sai_base(cores_jogadores[0], 0)
+pino_sai_base(cores_jogadores[1], 0)
+pino_sai_base(cores_jogadores[2], 0)
+pino_sai_base(cores_jogadores[3], 0)
+pino_sai_base(cores_jogadores[3], 1)
+
+for jogador in jogadores:
+    print(jogador['Base'])
+
+print(tabuleiro)
+move_pino(39, jogadores[3]['Cor'], 0, 6)
+print(tabuleiro)
+move_pino(45, jogadores[3]['Cor'], 0, 7)
+print(tabuleiro)
+
+for jogador in jogadores:
+    print(jogador['Base'])
+
+move_pino(0, jogadores[3]['Cor'], 0, 37)
+print(tabuleiro)
+
+for jogador in jogadores:
+    print(jogador['Base'])
+
+print(ceu)

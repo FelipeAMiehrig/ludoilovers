@@ -12,3 +12,6 @@ class Cor:
             return True
         else:
             return False
+
+    def __repr__(self):
+        return f'R: {self.red} G: {self.green} B: {self.blue}'
