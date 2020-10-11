@@ -14,7 +14,6 @@ CASAS_CEU = 5
 
 tabuleiro = None
 pinos = list()
-jogadores = list()
 ceu = list()
 
 lista_bases = list()
@@ -61,15 +60,15 @@ def inicializa_pinos(cores):
 
 def inicializa_jogadores(nomes, cores, bases):
     for numero_jogador in range(len(nomes_jogadores)):
-        jogadores.append(cria_jogador(nomes[numero_jogador], cores[numero_jogador], numero_jogador, bases[numero_jogador]))
+        cria_jogador(nomes[numero_jogador], cores[numero_jogador], numero_jogador, bases[numero_jogador])
 
 
 def pino_sai_base(cor, numero_pino):
-    for jogador in jogadores:
-        if jogador['Cor'] == cor:
-            pino = jogador['Base'][numero_pino]
-            jogador['Base'][numero_pino] = None
-            tabuleiro[13 * jogador['Numero']]['Pinos'].append(pino)
+    for jogador in range(get_len_jogadores()):
+        if get_jogador(jogador)['Cor'] == cor:
+            pino = get_jogador(jogador)['Base'][numero_pino]
+            get_jogador(jogador)['Base'][numero_pino] = None
+            tabuleiro[13 * get_jogador(jogador)['Numero']]['Pinos'].append(pino)
 
 
 def move_pino(casa, cor, numero_pino, quantidade_casas):
@@ -97,10 +96,10 @@ def checa_colisoes(pinos_na_casa, cor_pino):
     for pino in pinos_na_casa:
         if cor_pino != pino['Cor']:
             pinos_na_casa.pop(pinos_na_casa.index(pino))
-            for jogador_atual in jogadores:
-                if jogador_atual['Cor'] == pino['Cor']:
+            for jogador_atual in range(get_len_jogadores()):
+                if get_jogador(jogador_atual)['Cor'] == pino['Cor']:
                     pino['Casas Restantes'] = 51
-                    jogador_atual['Base'][pino['Numero']] = pino
+                    get_jogador(jogador_atual)['Base'][pino['Numero']] = pino
                     break
 
 
@@ -113,22 +112,22 @@ pino_sai_base(cores_jogadores[2], 0)
 pino_sai_base(cores_jogadores[3], 0)
 pino_sai_base(cores_jogadores[3], 1)
 
-for jogador in jogadores:
-    print(jogador['Base'])
+for jogador in range(get_len_jogadores()):
+    print(get_jogador(jogador)['Base'])
 
 print(tabuleiro)
-move_pino(39, jogadores[3]['Cor'], 0, 6)
+move_pino(39, get_jogador(3)['Cor'], 0, 6)
 print(tabuleiro)
-move_pino(45, jogadores[3]['Cor'], 0, 7)
-print(tabuleiro)
-
-for jogador in jogadores:
-    print(jogador['Base'])
-
-move_pino(0, jogadores[3]['Cor'], 0, 37)
+move_pino(45, get_jogador(3)['Cor'], 0, 7)
 print(tabuleiro)
 
-for jogador in jogadores:
-    print(jogador['Base'])
+for jogador in range(get_len_jogadores()):
+    print(get_jogador(jogador)['Base'])
+
+move_pino(0, get_jogador(3)['Cor'], 0, 37)
+print(tabuleiro)
+
+for jogador in range(get_len_jogadores()):
+    print(get_jogador(jogador)['Base'])
 
 print(ceu)

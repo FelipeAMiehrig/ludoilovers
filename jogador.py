@@ -1,6 +1,7 @@
-__all__ = ['cria_jogador', 'get_jogador', 'scored']
+__all__ = ['cria_jogador', 'get_jogador', 'scored', 'get_len_jogadores']
 
 jogadores = []
+
 
 def cria_jogador(nome, cor, numero, base):
     jogador = {'Nome': nome,
@@ -11,11 +12,17 @@ def cria_jogador(nome, cor, numero, base):
     jogadores.append(jogador)
     return 0
 
+
 def get_jogador(numero):
     for jogador in jogadores:
         if jogador["Numero"] == numero:
             return jogador.copy()
     return 1
+
+
+def get_len_jogadores():
+    return len(jogadores)
+
 
 def scored(numero):
     for jogador in jogadores:
