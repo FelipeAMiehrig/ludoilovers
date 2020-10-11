@@ -1,19 +1,17 @@
 import random
-__all__ = ['atual_resultado', 'numero_jogadas', 'jogar_dado', 'jogadas']
+__all__ = ['jogar_dado',  'get_jogada']
 
-atual_resultado = -1
-numero_jogadas = 0
+
 
 jogadas = list()
 
 
 def jogar_dado():
-    return random.randint(1, 6)
+    jogadas.append(random.randint(1, 6))
+    return 0
 
 
-def get_jogada(indice):
-    return jogadas[indice]
-
-
-def get_ultima_jogada():
+def get_jogada():
     return jogadas[-1]
+
+
