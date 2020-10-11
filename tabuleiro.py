@@ -64,16 +64,20 @@ def inicializa_jogadores(nomes, cores, bases):
 
 
 def pino_sai_base(cor, numero_pino):
-    for jogador in range(get_len_jogadores()):
-        if get_jogador(jogador)['Cor'] == cor:
-            pino = get_jogador(jogador)['Base'][numero_pino]
-            get_jogador(jogador)['Base'][numero_pino] = None
-            tabuleiro[13 * get_jogador(jogador)['Numero']]['Pinos'].append(pino)
+    for numero_jogador in range(consulta_tamanho_jogadores()):
+        if consulta_jogador(numero_jogador)['Cor'] == cor:
+            pino = consulta_jogador(numero_jogador)['Base'][numero_pino]
+            consulta_jogador(numero_jogador)['Base'][numero_pino] = None
+            tabuleiro[13 * consulta_jogador(numero_jogador)['Numero']]['Pinos'].append(pino)
 
 
-def move_pino(casa, cor, numero_pino, quantidade_casas):
+# Nao sei se e neceesario o argumento casa aqui que representa em qual casa o pino esta
+def move_pino(cor, numero_pino, quantidade_casas, casa=0):
+    # Procura o pino no tabuleiro
     for pino in tabuleiro[casa]['Pinos']:
+        # Achou o pino no tabuleiro
         if pino['Cor'] == cor and pino['Numero'] == numero_pino:
+            # Tira o pino da casa onde ele está atualmente e avança na lista circular
             pino_em_movimento = tabuleiro[casa]['Pinos'].pop(tabuleiro[casa]['Pinos'].index(pino))
             tabuleiro.set_indice_atual(casa)
             for movimento in range(quantidade_casas):
@@ -82,24 +86,46 @@ def move_pino(casa, cor, numero_pino, quantidade_casas):
             # Se a casa nao for segura checa para colisoes
             if tabuleiro[casa]['Segura'] is False:
                 checa_colisoes(tabuleiro[tabuleiro.get_indice_atual()]['Pinos'], cor)
-            # Se for para o ceu
+            # Se a quantidade de casas andadas faz ele ir para o ceu
             if pino_em_movimento['Casas Restantes'] - quantidade_casas <= 0:
                 pino_em_movimento['Casas Restantes'] = pino_em_movimento['Casas Restantes'] - quantidade_casas + CASAS_CEU
                 ceu.append(pino_em_movimento)
-            # Se estiver andando no tabuleiro normalmente
+                return
+            # Se a quantidade de casas andadas nao fizer ele ir para o ceu
             else:
                 pino_em_movimento['Casas Restantes'] = pino_em_movimento['Casas Restantes'] - quantidade_casas
                 tabuleiro[tabuleiro.get_indice_atual()]['Pinos'].append(pino_em_movimento)
+                return
+    # Procura o pino no ceu
+    for pino in ceu:
+        # Achou o pino no ceu
+        if pino['Cor'] == cor and pino['Numero'] == numero_pino:
+            # O dono do pino pode pontuar com aquele pino
+            if quantidade_casas == pino['Casas Restantes']:
+                # O jogador pontua com aquele pino
+                for numero_jogador in range(consulta_tamanho_jogadores()):
+                    if pino['Cor'] == consulta_jogador(numero_jogador)['Cor']:
+                        pontuou(numero_jogador)
+                        ceu.pop(ceu.index(pino))
+            # O dono do pino não pode pontuar com aquele pino
+            else:
+                # Checa se nao vai extrapolar o ceu, movimento nao permitido pelas regras do jogo
+                if pino['Casas Restantes'] - quantidade_casas >= 0:
+                    # Anda no ceu
+                    pino['Casas Restantes'] -= quantidade_casas
+                else:
+                    # Nao da para andar, feedback de interface entra aqui
+                    pass
 
 
 def checa_colisoes(pinos_na_casa, cor_pino):
     for pino in pinos_na_casa:
         if cor_pino != pino['Cor']:
             pinos_na_casa.pop(pinos_na_casa.index(pino))
-            for jogador_atual in range(get_len_jogadores()):
-                if get_jogador(jogador_atual)['Cor'] == pino['Cor']:
+            for jogador_atual in range(consulta_tamanho_jogadores()):
+                if consulta_jogador(jogador_atual)['Cor'] == pino['Cor']:
                     pino['Casas Restantes'] = 51
-                    get_jogador(jogador_atual)['Base'][pino['Numero']] = pino
+                    consulta_jogador(jogador_atual)['Base'][pino['Numero']] = pino
                     break
 
 
@@ -112,22 +138,25 @@ pino_sai_base(cores_jogadores[2], 0)
 pino_sai_base(cores_jogadores[3], 0)
 pino_sai_base(cores_jogadores[3], 1)
 
-for jogador in range(get_len_jogadores()):
-    print(get_jogador(jogador)['Base'])
+for numero_jogador in range(consulta_tamanho_jogadores()):
+    print(consulta_jogador(numero_jogador)['Base'])
 
 print(tabuleiro)
-move_pino(39, get_jogador(3)['Cor'], 0, 6)
+move_pino(consulta_jogador(3)['Cor'], 0, 6, 39)
 print(tabuleiro)
-move_pino(45, get_jogador(3)['Cor'], 0, 7)
+move_pino(consulta_jogador(3)['Cor'], 0, 7, 45)
 print(tabuleiro)
-
-for jogador in range(get_len_jogadores()):
-    print(get_jogador(jogador)['Base'])
-
-move_pino(0, get_jogador(3)['Cor'], 0, 37)
+move_pino(consulta_jogador(3)['Cor'], 0, 38, 0)
 print(tabuleiro)
 
-for jogador in range(get_len_jogadores()):
-    print(get_jogador(jogador)['Base'])
-
+print(ceu)
+move_pino(consulta_jogador(3)['Cor'], 0, 1)
+print(ceu)
+move_pino(consulta_jogador(3)['Cor'], 0, 1)
+print(ceu)
+move_pino(consulta_jogador(3)['Cor'], 0, 1)
+print(ceu)
+move_pino(consulta_jogador(3)['Cor'], 0, 1)
+print(ceu)
+move_pino(consulta_jogador(3)['Cor'], 0, 1)
 print(ceu)

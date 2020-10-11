@@ -1,4 +1,4 @@
-__all__ = ['cria_jogador', 'get_jogador', 'scored', 'get_len_jogadores']
+__all__ = ['cria_jogador', 'consulta_jogador', 'pontuou', 'consulta_tamanho_jogadores']
 
 jogadores = []
 
@@ -13,18 +13,18 @@ def cria_jogador(nome, cor, numero, base):
     return 0
 
 
-def get_jogador(numero):
+def consulta_jogador(numero):
     for jogador in jogadores:
         if jogador["Numero"] == numero:
             return jogador.copy()
     return 1
 
 
-def get_len_jogadores():
+def consulta_tamanho_jogadores():
     return len(jogadores)
 
 
-def scored(numero):
+def pontuou(numero):
     for jogador in jogadores:
         if jogador["Numero"] == numero:
             jogador["Placar"] += 1

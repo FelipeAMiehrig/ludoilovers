@@ -1,8 +1,5 @@
 import random
-__all__ = ['jogar_dado',  'get_jogada']
-
-
-
+__all__ = ['jogar_dado',  'consulta_jogada']
 jogadas = list()
 
 
@@ -11,7 +8,7 @@ def jogar_dado():
     return 0
 
 
-def get_jogada():
+def consulta_jogada():
     return jogadas[-1]
 
 
