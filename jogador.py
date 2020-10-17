@@ -1,9 +1,13 @@
-__all__ = ['cria_jogador', 'consulta_jogador', 'pontuou', 'consulta_tamanho_jogadores']
+__all__ = ['cria_jogador', 'consulta_jogador', 'pontuou', 'consulta_tamanho_jogadores', 'gera_relacao_jogadores']
 
 jogadores = []
 
 
 def cria_jogador(nome, cor, numero, base):
+    if len(jogadores) == 4:
+        return -1
+    elif nome == '' or numero == '':
+        return 1
     jogador = {'Nome': nome,
                'Cor': cor,
                'Numero': numero,
@@ -31,4 +35,5 @@ def pontuou(numero):
             return 0
     return 1
 
-
+def gera_relacao_jogadores():
+    return jogadores.copy()
