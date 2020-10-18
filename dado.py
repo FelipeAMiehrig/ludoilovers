@@ -14,7 +14,7 @@ def consulta_jogada():
 def consulta_numero_jogadas():
     return len(jogadas)
 
-def gera_lista_jogadas()
+def gera_lista_jogadas():
     return jogadas.copy()
 
 
