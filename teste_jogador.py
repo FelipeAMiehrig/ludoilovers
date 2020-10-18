@@ -63,8 +63,8 @@ def test_10_consulta_tamanho_jogadores_ok_consulta_bem_sucedida(self):
 def test_11_gera_relacao_jogadores(self):
     print("Caso teste 11 - gera relação jogadores")
     retorno_esperado = gera_relacao_jogadores()
-    self.assertIn([{'Nome': "Daniel", 'Cor': "vermelho",
-                   'Numero': 1, 'Placar': 0,
+    self.assertEqual([{'Nome': "Daniel", 'Cor': "vermelho",
+                   'Numero': 1, 'Placar': 1,
                    'Base': (0,0)},
                    {'Nome': "Rafael", 'Cor': "verde",
                     'Numero': 2, 'Placar': 0,

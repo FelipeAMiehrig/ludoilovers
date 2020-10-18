@@ -6,7 +6,7 @@ jogadores = []
 def cria_jogador(nome, cor, numero, base):
     if len(jogadores) == 4:
         return -1
-    elif nome == '' or numero == '':
+    elif nome == '':
         return 1
     jogador = {'Nome': nome,
                'Cor': cor,
