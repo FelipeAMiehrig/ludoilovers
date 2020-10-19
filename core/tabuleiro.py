@@ -1,8 +1,8 @@
-from pino import *
-from casa import *
-from jogador import *
-from listacircular import ListaCircular
-from cor import Cor
+from core.pino import *
+from core.casa import *
+from core.jogador import *
+from auxiliar.listacircular import ListaCircular
+from auxiliar.cor import Cor
 from itertools import cycle
 
 CASAS_FALTANDO_ANDAR = 0
@@ -22,6 +22,10 @@ cores_jogadores = list()
 
 nomes_jogadores = ['Isabella', 'Felipe', 'Miguel', 'Sergio']
 cores_jogadores = [Cor(125, 255, 100), Cor(100, 50, 70), Cor(20, 55, 100), Cor(10, 80, 0)]
+
+
+def consulta_tabuleiro():
+    return tabuleiro
 
 
 def cria_tabuleiro(casas):
@@ -126,36 +130,3 @@ def checa_colisoes(pinos_na_casa, cor_pino):
                     pino['Casas Restantes'] = 51
                     consulta_jogador(jogador_atual)['Base'][pino['Numero']] = pino
                     break
-
-
-inicializa_pinos(cores_jogadores)
-inicializa_jogadores(nomes_jogadores, cores_jogadores, lista_bases)
-
-pino_sai_base(cores_jogadores[0], 0)
-pino_sai_base(cores_jogadores[1], 0)
-pino_sai_base(cores_jogadores[2], 0)
-pino_sai_base(cores_jogadores[3], 0)
-pino_sai_base(cores_jogadores[3], 1)
-
-for numero_jogador_atual in range(consulta_tamanho_jogadores()):
-    print(consulta_jogador(numero_jogador_atual)['Base'])
-
-print(tabuleiro)
-move_pino(consulta_jogador(3)['Cor'], 0, 6, 39)
-print(tabuleiro)
-move_pino(consulta_jogador(3)['Cor'], 0, 7, 45)
-print(tabuleiro)
-move_pino(consulta_jogador(3)['Cor'], 0, 38, 0)
-print(tabuleiro)
-
-print(ceu)
-move_pino(consulta_jogador(3)['Cor'], 0, 1)
-print(ceu)
-move_pino(consulta_jogador(3)['Cor'], 0, 1)
-print(ceu)
-move_pino(consulta_jogador(3)['Cor'], 0, 1)
-print(ceu)
-move_pino(consulta_jogador(3)['Cor'], 0, 1)
-print(ceu)
-move_pino(consulta_jogador(3)['Cor'], 0, 1)
-print(ceu)

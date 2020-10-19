@@ -1,5 +1,5 @@
 import random
-__all__ = ['jogar_dado',  'consulta_jogada']
+__all__ = ['jogar_dado',  'consulta_jogada', 'consulta_numero_jogadas']
 jogadas = list()
 
 
