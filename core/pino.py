@@ -3,7 +3,7 @@ __all__ = ['cria_pino', 'CASAS_PARA_ANDAR', 'NUMERO_PINOS', ]
 NUMERO_PINOS = 16
 CASAS_PARA_ANDAR = 51
 
-lista_pinos = list()
+
 
 
 def cria_pino(cor, numero, casas_restantes):
