@@ -1,7 +1,3 @@
-from itertools import cycle
-import sys
-
-
 class ListaCircular:
     def __init__(self, lista):
         self.tamanho = len(lista)

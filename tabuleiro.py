@@ -1,7 +1,6 @@
 from pino import *
 from casa import *
 from jogador import *
-from dado import *
 from listacircular import ListaCircular
 from cor import Cor
 from itertools import cycle
@@ -138,8 +137,8 @@ pino_sai_base(cores_jogadores[2], 0)
 pino_sai_base(cores_jogadores[3], 0)
 pino_sai_base(cores_jogadores[3], 1)
 
-for numero_jogador in range(consulta_tamanho_jogadores()):
-    print(consulta_jogador(numero_jogador)['Base'])
+for numero_jogador_atual in range(consulta_tamanho_jogadores()):
+    print(consulta_jogador(numero_jogador_atual)['Base'])
 
 print(tabuleiro)
 move_pino(consulta_jogador(3)['Cor'], 0, 6, 39)

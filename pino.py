@@ -1,6 +1,3 @@
-import numpy as np
-from casa import *
-
 __all__ = ['cria_pino', 'CASAS_PARA_ANDAR', 'NUMERO_PINOS', 'get_pino']
 
 NUMERO_PINOS = 16

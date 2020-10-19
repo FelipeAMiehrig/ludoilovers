@@ -11,8 +11,10 @@ def jogar_dado():
 def consulta_jogada():
     return jogadas[-1]
 
+
 def consulta_numero_jogadas():
     return len(jogadas)
+
 
 def gera_lista_jogadas():
     return jogadas.copy()

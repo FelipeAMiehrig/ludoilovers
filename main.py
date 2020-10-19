@@ -1,5 +1,3 @@
-from dado import *
-from jogador import *
 from itertools import cycle
 
 
@@ -8,6 +6,7 @@ def main():
     print(lista_circular)
 
     pass
+
 
 if __name__ == "__main__":
     main()
