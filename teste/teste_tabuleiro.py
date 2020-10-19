@@ -1,11 +1,11 @@
 import unittest
 from core.tabuleiro import *
 
+inicializa_pinos(cores_jogadores)
+inicializa_jogadores(nomes_jogadores, cores_jogadores, lista_bases)
+
 
 class TestesTabuleiro(unittest.TestCase):
-    inicializa_pinos(cores_jogadores)
-    inicializa_jogadores(nomes_jogadores, cores_jogadores, lista_bases)
-
     def teste_01_sai_com_pino_jogador_01(self):
         print('Teste 1 - OK')
         pino_saiu = consulta_jogador(0)['Base'][0]

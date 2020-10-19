@@ -24,10 +24,6 @@ nomes_jogadores = ['Isabella', 'Felipe', 'Miguel', 'Sergio']
 cores_jogadores = [Cor(125, 255, 100), Cor(100, 50, 70), Cor(20, 55, 100), Cor(10, 80, 0)]
 
 
-def consulta_tabuleiro():
-    return tabuleiro
-
-
 def cria_tabuleiro(casas):
     return cycle(casas)
 
