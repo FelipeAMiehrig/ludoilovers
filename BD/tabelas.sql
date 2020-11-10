@@ -25,6 +25,6 @@ create table dado(
 );
 
 create table casa(
-    segura varchar(30) not null
+    segura varchar(30) not null,
     primary key(segura)
 );
