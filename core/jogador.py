@@ -37,3 +37,19 @@ def pontuou(numero):
 
 def gera_relacao_jogadores():
     return jogadores.copy()
+
+try:
+	connection = mysql.connector.connect(host = 'localhost', database = 'ludo', user ='root', password = 'root')
+	sql = ("""INSERT INTO jogador (nome, pontuacao, pinos_base, cor) VALUES (%s, %d, %d, %s)""", nome, placar, base, cor)
+	cursor = connection.cursor()
+	cursor.execute(sql)
+	connection.commit()
+	print(cursor.rowcount, "Registro inserido")
+	cursor.close()
+except Error as e:
+	print("Erro de conexão", e)
+finally:
+	if (connection.is_connected()):
+		cursor.close()
+		connection.close()
+		print("Conexão encerrada")
